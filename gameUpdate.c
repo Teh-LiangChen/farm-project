@@ -12,31 +12,35 @@ void GameUpdate()
 
     if (IsKeyDown(KEY_LEFT))
     {
-        x -= moveDistance;
         hasKeyBeenPressed = true;
         moving = true;
         player.currentAnimation = ANIMATION_WALK_LEFT;
+
+        if (x > 0)  x -= moveDistance;;
     }
     else if (IsKeyDown(KEY_RIGHT))
     {
-        x += moveDistance;
         hasKeyBeenPressed = true;
         moving = true;
         player.currentAnimation = ANIMATION_WALK_RIGHT;
+
+        if(x < TILE_WIDTH*WORLD_WIDTH - 16) x += moveDistance;
     }
     else if (IsKeyDown(KEY_UP))
     {
-        y -= moveDistance;
         hasKeyBeenPressed = true;
         moving = true;
         player.currentAnimation = ANIMATION_WALK_UP;
+
+        if (y > -8) y -= moveDistance;
     }
     else if (IsKeyDown(KEY_DOWN))
     {
-        y += moveDistance;
         hasKeyBeenPressed = true;
         moving = true;
         player.currentAnimation = ANIMATION_WALK_DOWN;
+
+        if (y < TILE_HEIGHT*WORLD_HEIGHT - 20) y += moveDistance;
     }
     
     if (!moving)

@@ -5,6 +5,10 @@ what have been done so far
 - a character
 - chracter moving animation
 
+doing
+- boundary and collision
+    - created a simple world boundary collision logic but no usable for object boundary
+
 what to do
-- collision
+- object boundary
 - crop growing system

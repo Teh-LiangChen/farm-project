@@ -124,7 +124,12 @@ void GameRender()
     sAnimation* currentAnimation = &player.animations[player.currentAnimation];
 
     DrawSpriteAnimationPro(currentAnimation, textures[TEXTURE_SPRITE_BASIC], dest, origin, 0.0f, WHITE);
+    
     EndMode2D();
+
+    //display player coordinate for checking
+    DrawRectangle(5, 5, 500, 50, Fade(GRAY, 0.5f));
+    DrawText(TextFormat("Coor: (%2.2f, %2.2f)", camera.target.x, camera.target.y), 10, 10, 20, BLACK);
 }
 
 void DrawTile (int pos_x, int pos_y, int texture_index_x, int texture_index_y, Texture2D texture)
