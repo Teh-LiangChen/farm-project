@@ -1,0 +1,142 @@
+#include "gameRender.h"
+
+void DrawTile (int pos_x, int pos_y, int texture_index_x, int texture_index_y, Texture2D texture);
+
+void GameRender()
+{
+    BeginMode2D(camera);
+
+    sTile tile;
+    int texture_index_x = 0;
+    int texture_index_y = 0;
+
+    // render world
+    for (int i=0; i < WORLD_WIDTH; i++)
+    {
+        for (int j=0; j< WORLD_HEIGHT; j++)
+        {
+
+            tile = world[i][j];
+
+            //border tile
+            //top left corner
+            if (i == 0 && j == 0)
+            {
+                texture_index_x = 0;
+                texture_index_y = 0;
+            }
+            //top right corner
+            else if (i == WORLD_WIDTH-1 && j == 0)
+            {
+                texture_index_x = 2;
+                texture_index_y = 0;
+            }
+            //bottom left corner
+            else if (i == 0 && j == WORLD_HEIGHT-1)
+            {
+                texture_index_x = 0;
+                texture_index_y = 2;
+            }
+            //bottom right corner
+            else if (i == WORLD_WIDTH-1 && j == WORLD_HEIGHT-1)
+            {
+                texture_index_x = 2;
+                texture_index_y = 2;
+            }
+            //top tile
+            else if (i == 0)
+            {
+                texture_index_x = 0;
+                texture_index_y = 1;
+            }
+            //left tile
+            else if (j == 0)
+            {
+                texture_index_x = 1;
+                texture_index_y = 0;
+            }
+            //right tile
+            else if (i == WORLD_WIDTH-1)
+            {
+                texture_index_x = 2;
+                texture_index_y = 1;
+            }
+            //bottom tile
+            else if (j == WORLD_HEIGHT-1)
+            {
+                texture_index_x = 1;
+                texture_index_y = 2;
+            }
+            //center tile with random grass tile
+            else
+            {
+                switch (tile.type)
+                {
+                    case GRASS_LONG:
+                        texture_index_x = 0;
+                        texture_index_y = 5;
+                        break;
+                    case GRASS_LONG_WHTIE:
+                        texture_index_x = 0;
+                        texture_index_y = 6;
+                        break;
+                    //MAX also plain grass so that more plan grass
+                    case GRASS_MAX:
+                        texture_index_x = 1;
+                        texture_index_y = 1;
+                        break;
+                    case GRASS_PLAIN:
+                        texture_index_x = 1;
+                        texture_index_y = 1;
+                        break;
+                    case GRASS_SHORT_1:
+                        texture_index_x = 1;
+                        texture_index_y = 5;
+                        break;
+                    case GRASS_SHORT_1_WHITE:
+                        texture_index_x = 1;
+                        texture_index_y = 6;
+                        break;
+                    case GRASS_SHORT_2:
+                        texture_index_x = 2;
+                        texture_index_y = 5;
+                        break;
+                    case GRASS_SHORT_2_WHITE:
+                        texture_index_x = 2;
+                        texture_index_y = 6;
+                        break;
+                } 
+            }
+
+            DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
+        }
+    }
+
+    // render player
+    //DrawTile(camera.target.x, camera.target.y, 1, 1,textures[TEXTURE_SPRITE_BASIC]);
+    Rectangle dest = {  (int)player.base.x,
+                        (int)player.base.y,
+                        TILE_WIDTH,
+                        TILE_HEIGHT};
+    
+    Vector2 origin = {0,0};
+    
+    sAnimation* currentAnimation = &player.animations[player.currentAnimation];
+
+    DrawSpriteAnimationPro(currentAnimation, textures[TEXTURE_SPRITE_BASIC], dest, origin, 0.0f, WHITE);
+    EndMode2D();
+}
+
+void DrawTile (int pos_x, int pos_y, int texture_index_x, int texture_index_y, Texture2D texture)
+{
+    Rectangle source = {(float) texture_index_x * TILE_WIDTH, 
+                        (float) texture_index_y * TILE_HEIGHT, 
+                        (float)TILE_WIDTH, 
+                        (float)TILE_HEIGHT};
+    Rectangle dest = {  (float)(pos_x), 
+                        (float)(pos_y), 
+                        (float)TILE_WIDTH, 
+                        (float)TILE_HEIGHT};
+    Vector2 origin = {0,0};
+    DrawTexturePro (texture, source, dest, origin, 0.0f, WHITE);
+}
