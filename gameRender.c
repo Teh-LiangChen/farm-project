@@ -9,6 +9,7 @@ void GameRender()
     sTile tile;
     int texture_index_x = 0;
     int texture_index_y = 0;
+    int isSolidCount = 0;
 
     // render world
     for (int i=0; i < WORLD_WIDTH; i++)
@@ -24,48 +25,56 @@ void GameRender()
             {
                 texture_index_x = 0;
                 texture_index_y = 0;
+                tile.isSolid = true;
             }
             //top right corner
             else if (i == WORLD_WIDTH-1 && j == 0)
             {
                 texture_index_x = 2;
                 texture_index_y = 0;
+                tile.isSolid = true;
             }
             //bottom left corner
             else if (i == 0 && j == WORLD_HEIGHT-1)
             {
                 texture_index_x = 0;
                 texture_index_y = 2;
+                tile.isSolid = true;
             }
             //bottom right corner
             else if (i == WORLD_WIDTH-1 && j == WORLD_HEIGHT-1)
             {
                 texture_index_x = 2;
                 texture_index_y = 2;
+                tile.isSolid = true;
             }
             //top tile
             else if (i == 0)
             {
                 texture_index_x = 0;
                 texture_index_y = 1;
+                tile.isSolid = true;
             }
             //left tile
             else if (j == 0)
             {
                 texture_index_x = 1;
                 texture_index_y = 0;
+                tile.isSolid = true;
             }
             //right tile
             else if (i == WORLD_WIDTH-1)
             {
                 texture_index_x = 2;
                 texture_index_y = 1;
+                tile.isSolid = true;
             }
             //bottom tile
             else if (j == WORLD_HEIGHT-1)
             {
                 texture_index_x = 1;
                 texture_index_y = 2;
+                tile.isSolid = true;
             }
             //center tile with random grass tile
             else
@@ -109,6 +118,12 @@ void GameRender()
             }
 
             DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
+
+            if(tile.isSolid)
+            {
+                hitbox[isSolidCount] = (Rectangle){tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
+                DrawRectangleRec(hitbox[isSolidCount++], Fade(GRAY, 0.5f));
+            }
         }
     }
 
@@ -123,6 +138,7 @@ void GameRender()
                     TILE_HEIGHT,
                     Fade(GRAY, 0.5f));
     
+    // render player hitbox                
     DrawRectangle(player.hitbox.x, player.hitbox.y, TILE_WIDTH/2, TILE_HEIGHT, Fade(GRAY, 0.5f));
 
 

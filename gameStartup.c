@@ -25,6 +25,7 @@ void GameStartup()
                 .x = i,
                 .y = j,
                 .type = GetRandomValue(GRASS_PLAIN, GRASS_MAX),
+                .isSolid = false,
             };
         }
     }

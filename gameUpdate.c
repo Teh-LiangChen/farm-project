@@ -16,7 +16,7 @@ void GameUpdate()
         moving = true;
         player.currentAnimation = ANIMATION_WALK_LEFT;
 
-        if (x > 12)  x -= moveDistance;
+        x -= moveDistance;
     }
     else if (IsKeyDown(KEY_RIGHT))
     {
@@ -24,7 +24,7 @@ void GameUpdate()
         moving = true;
         player.currentAnimation = ANIMATION_WALK_RIGHT;
 
-        if(x < TILE_WIDTH*WORLD_WIDTH - 10) x += moveDistance;
+        x += moveDistance;
     }
     else if (IsKeyDown(KEY_UP))
     {
@@ -32,7 +32,7 @@ void GameUpdate()
         moving = true;
         player.currentAnimation = ANIMATION_WALK_UP;
 
-        if (y > 2) y -= moveDistance;
+        y -= moveDistance;
     }
     else if (IsKeyDown(KEY_DOWN))
     {
@@ -40,7 +40,7 @@ void GameUpdate()
         moving = true;
         player.currentAnimation = ANIMATION_WALK_DOWN;
 
-        if (y < TILE_HEIGHT*WORLD_HEIGHT - 16) y += moveDistance;
+        y += moveDistance;
     }
     
     if (!moving)
@@ -53,13 +53,29 @@ void GameUpdate()
 
     player.hitbox.x = x+4;
     player.hitbox.y = y;  
+
+    bool collisionFound = false;
+
+    for (int i=0; i < 400; i++)
+    {
+        if (CheckCollisionRecs(player.hitbox, hitbox[i]))
+        {
+            collisionFound = true;
+            break;
+        }
+    }
+
+    if (CheckCollisionRecs(player.hitbox, hillhitbox))
+    {
+        collisionFound = true;
+    }
     
-    if (!CheckCollisionRecs(player.hitbox, hillhitbox))
+    if(!collisionFound)
     {
         player.base.x = x;
         player.base.y = y;
     }
-    
+
     camera.target = (Vector2) {player.base.x, player.base.y};
 
     player.animations[player.currentAnimation].isPlaying = true;

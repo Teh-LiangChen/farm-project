@@ -44,6 +44,7 @@ typedef struct
     int x;
     int y;
     int type;
+    bool isSolid;
 } sTile;
 
 typedef struct
@@ -73,6 +74,7 @@ typedef struct
     Rectangle hitbox;
 } sSprite;
 
+extern Rectangle hitbox[];
 extern Rectangle hillhitbox;
 extern Texture2D textures[MAX_TEXTURES];
 extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
