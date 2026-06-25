@@ -15,6 +15,7 @@ typedef enum
 {
     // MAP AND TERRAIN
     TEXTURE_TILESET_GRASS = 0,
+    TEXTURE_TILESET_HILL,
 
     // SPRITE
     TEXTURE_SPRITE_BASIC,
@@ -69,8 +70,10 @@ typedef struct
     sEntity base;
     sAnimation animations[ANIMATION_MAX];
     AnimationType currentAnimation;
+    Rectangle hitbox;
 } sSprite;
 
+extern Rectangle hillhitbox;
 extern Texture2D textures[MAX_TEXTURES];
 extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 extern Camera2D camera;

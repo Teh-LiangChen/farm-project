@@ -4,6 +4,7 @@
 #include "gameRender.h"
 #include "gameShutdown.h"
 
+Rectangle hillhitbox;
 Texture2D textures[MAX_TEXTURES];
 sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 Camera2D camera = {0};

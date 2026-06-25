@@ -112,6 +112,20 @@ void GameRender()
         }
     }
 
+    DrawTile (world[5][5].x * TILE_WIDTH, world[5][5].y * TILE_HEIGHT, 3, 3, textures[TEXTURE_TILESET_HILL]);
+    hillhitbox = (Rectangle){   world[5][5].x * TILE_WIDTH, 
+                                world[5][5].y * TILE_HEIGHT, 
+                                TILE_WIDTH, 
+                                TILE_HEIGHT};
+    DrawRectangle ( world[5][5].x * TILE_WIDTH, 
+                    world[5][5].y * TILE_HEIGHT, 
+                    TILE_WIDTH,
+                    TILE_HEIGHT,
+                    Fade(GRAY, 0.5f));
+    
+    DrawRectangle(player.hitbox.x, player.hitbox.y, TILE_WIDTH/2, TILE_HEIGHT, Fade(GRAY, 0.5f));
+
+
     // render player
     //DrawTile(camera.target.x, camera.target.y, 1, 1,textures[TEXTURE_SPRITE_BASIC]);
     Rectangle dest = {  (int)player.base.x,
@@ -130,6 +144,7 @@ void GameRender()
     //display player coordinate for checking
     DrawRectangle(5, 5, 500, 50, Fade(GRAY, 0.5f));
     DrawText(TextFormat("Coor: (%2.2f, %2.2f)", camera.target.x, camera.target.y), 10, 10, 20, BLACK);
+    DrawText(TextFormat("Tile: (%d, %d)", player.base.x / TILE_WIDTH, player.base.y /TILE_HEIGHT), 10, 35, 20, BLACK);
 }
 
 void DrawTile (int pos_x, int pos_y, int texture_index_x, int texture_index_y, Texture2D texture)
