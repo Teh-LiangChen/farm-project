@@ -119,6 +119,7 @@ void GameRender()
 
             DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
 
+            // TO DO, fix the boundary size
             if(tile.isSolid)
             {
                 hitbox[isSolidCount] = (Rectangle){tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
