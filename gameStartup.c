@@ -16,17 +16,36 @@ void GameStartup()
     textures[TEXTURE_TILESET_HILL] = LoadTextureFromImage(image);
     UnloadImage(image); 
 
+    worldHitbox = CreateHitboxRec(20);
+
     for (int i=0; i < WORLD_WIDTH; i++)
     {
         for (int j=0; j< WORLD_HEIGHT; j++)
         {
+            bool worldEdge = (i == 0) || (j == 0) || (i == WORLD_WIDTH - 1) || (j == WORLD_HEIGHT - 1);
+
             world[i][j] = (sTile)
             {
                 .x = i,
                 .y = j,
                 .type = GetRandomValue(GRASS_PLAIN, GRASS_MAX),
-                .isSolid = false,
+                .isSolid = worldEdge,
             };
+
+            if(world[i][j].isSolid)
+            {
+                AddHitboxRec(&worldHitbox, (Rectangle){world[i][j].x * TILE_WIDTH, world[i][j].y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT});
+            }
+        }
+    }
+
+    // // TO-DO make into function if keep use
+    for (int i = 5; i < 8; i++)
+    {
+        for (int j = 5; j < 8; j++)
+        {
+            world[i][j].isSolid = true;
+            AddHitboxRec(&worldHitbox, (Rectangle){world[i][j].x * TILE_WIDTH, world[i][j].y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT});
         }
     }
 

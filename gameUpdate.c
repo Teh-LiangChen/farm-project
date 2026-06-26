@@ -56,18 +56,13 @@ void GameUpdate()
 
     bool collisionFound = false;
 
-    for (int i=0; i < 400; i++)
+    for (int i=0; i < worldHitbox.counter; i++)
     {
-        if (CheckCollisionRecs(player.hitbox, hitbox[i]))
+        if (CheckCollisionRecs(player.hitbox, worldHitbox.rectangles[i]))
         {
             collisionFound = true;
             break;
         }
-    }
-
-    if (CheckCollisionRecs(player.hitbox, hillhitbox))
-    {
-        collisionFound = true;
     }
     
     if(!collisionFound)

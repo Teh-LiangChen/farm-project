@@ -9,7 +9,6 @@ void GameRender()
     sTile tile;
     int texture_index_x = 0;
     int texture_index_y = 0;
-    int isSolidCount = 0;
 
     // render world
     for (int i=0; i < WORLD_WIDTH; i++)
@@ -20,61 +19,16 @@ void GameRender()
             tile = world[i][j];
 
             //border tile
-            //top left corner
-            if (i == 0 && j == 0)
-            {
-                texture_index_x = 0;
-                texture_index_y = 0;
-                tile.isSolid = true;
-            }
-            //top right corner
-            else if (i == WORLD_WIDTH-1 && j == 0)
-            {
-                texture_index_x = 2;
-                texture_index_y = 0;
-                tile.isSolid = true;
-            }
-            //bottom left corner
-            else if (i == 0 && j == WORLD_HEIGHT-1)
-            {
-                texture_index_x = 0;
-                texture_index_y = 2;
-                tile.isSolid = true;
-            }
-            //bottom right corner
-            else if (i == WORLD_WIDTH-1 && j == WORLD_HEIGHT-1)
-            {
-                texture_index_x = 2;
-                texture_index_y = 2;
-                tile.isSolid = true;
-            }
-            //top tile
-            else if (i == 0)
-            {
-                texture_index_x = 0;
-                texture_index_y = 1;
-                tile.isSolid = true;
-            }
-            //left tile
-            else if (j == 0)
+            if (i == 0 || i == WORLD_WIDTH - 1 || j == 0 || j == WORLD_HEIGHT - 1)
             {
                 texture_index_x = 1;
-                texture_index_y = 0;
-                tile.isSolid = true;
-            }
-            //right tile
-            else if (i == WORLD_WIDTH-1)
-            {
-                texture_index_x = 2;
                 texture_index_y = 1;
-                tile.isSolid = true;
-            }
-            //bottom tile
-            else if (j == WORLD_HEIGHT-1)
-            {
-                texture_index_x = 1;
-                texture_index_y = 2;
-                tile.isSolid = true;
+
+                if (i == 0) texture_index_x = 0;
+                if (i == WORLD_WIDTH - 1) texture_index_x = 2;
+
+                if (j == 0) texture_index_y = 0;
+                if (j == WORLD_HEIGHT - 1) texture_index_y = 2;
             }
             //center tile with random grass tile
             else
@@ -118,29 +72,32 @@ void GameRender()
             }
 
             DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
-
-            // TO DO, fix the boundary size
-            if(tile.isSolid)
-            {
-                hitbox[isSolidCount] = (Rectangle){tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
-                DrawRectangleRec(hitbox[isSolidCount++], Fade(GRAY, 0.5f));
-            }
         }
     }
 
-    DrawTile (world[5][5].x * TILE_WIDTH, world[5][5].y * TILE_HEIGHT, 3, 3, textures[TEXTURE_TILESET_HILL]);
-    hillhitbox = (Rectangle){   world[5][5].x * TILE_WIDTH, 
-                                world[5][5].y * TILE_HEIGHT, 
-                                TILE_WIDTH, 
-                                TILE_HEIGHT};
-    DrawRectangle ( world[5][5].x * TILE_WIDTH, 
-                    world[5][5].y * TILE_HEIGHT, 
-                    TILE_WIDTH,
-                    TILE_HEIGHT,
-                    Fade(GRAY, 0.5f));
+    
+    // render hill
+    // TO-DO make into function if keep use
+    for (int i = 5; i < 8; i++)
+    {
+        for (int j = 5; j < 8; j++)
+        {
+            DrawTile (  world[i][j].x * TILE_WIDTH, 
+                        world[i][j].y * TILE_HEIGHT, 
+                        i-5, j-5, textures[TEXTURE_TILESET_HILL]);
+        }
+    }
+    
+
+    // render hill hit box
+    // DrawRectangle ( world[5][5].x * TILE_WIDTH, 
+    //                 world[5][5].y * TILE_HEIGHT, 
+    //                 TILE_WIDTH,
+    //                 TILE_HEIGHT,
+    //                 Fade(GRAY, 0.5f));
     
     // render player hitbox                
-    DrawRectangle(player.hitbox.x, player.hitbox.y, TILE_WIDTH/2, TILE_HEIGHT, Fade(GRAY, 0.5f));
+    // DrawRectangle(player.hitbox.x, player.hitbox.y, TILE_WIDTH/2, TILE_HEIGHT, Fade(GRAY, 0.5f));
 
 
     // render player

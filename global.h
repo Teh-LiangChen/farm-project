@@ -5,6 +5,11 @@
 #include "raymath.h"
 
 #include "animation.h"
+#include "gameStartup.h"
+#include "gameUpdate.h"
+#include "gameRender.h"
+#include "gameShutdown.h"
+#include "hitbox.h"
 
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
@@ -74,10 +79,9 @@ typedef struct
     Rectangle hitbox;
 } sSprite;
 
-extern Rectangle hitbox[];
-extern Rectangle hillhitbox;
 extern Texture2D textures[MAX_TEXTURES];
 extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
+extern sHitbox worldHitbox;
 extern Camera2D camera;
 extern sSprite player;
 

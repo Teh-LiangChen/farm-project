@@ -12,5 +12,7 @@ void GameShutdown()
         DisposeSpriteAnimation(player.animations[i]);
     }
 
+    FreeHitbox(&worldHitbox);
+
     CloseAudioDevice();
 }
