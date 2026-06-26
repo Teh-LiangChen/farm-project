@@ -102,16 +102,30 @@ void GameRender()
 
     // render player
     //DrawTile(camera.target.x, camera.target.y, 1, 1,textures[TEXTURE_SPRITE_BASIC]);
+    // 1x1 animation destination
     Rectangle dest = {  (int)player.base.x,
                         (int)player.base.y,
                         TILE_WIDTH,
                         TILE_HEIGHT};
+
+    // 1x3 animation destination
+    Rectangle dest2 = {  (int)player.base.x,
+                        (int)player.base.y - 16,
+                        TILE_WIDTH,
+                        TILE_HEIGHT*3};
     
     Vector2 origin = {0,0};
     
     sAnimation* currentAnimation = &player.animations[player.currentAnimation];
 
-    DrawSpriteAnimationPro(currentAnimation, textures[TEXTURE_SPRITE_BASIC], dest, origin, 0.0f, WHITE);
+    if (player.currentAnimation == ANIMATION_DIG_FRONT)
+    {
+        DrawSpriteAnimationPro(currentAnimation, textures[TEXTURE_SPRITE_ACTION], dest2, origin, 0.0f, WHITE);
+    }
+    else
+    {
+        DrawSpriteAnimationPro(currentAnimation, textures[TEXTURE_SPRITE_BASIC], dest, origin, 0.0f, WHITE);
+    }
     
     EndMode2D();
 

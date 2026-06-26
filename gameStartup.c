@@ -16,6 +16,10 @@ void GameStartup()
     textures[TEXTURE_TILESET_HILL] = LoadTextureFromImage(image);
     UnloadImage(image); 
 
+    image = LoadImage("assets/sprout-lands-sprites-basic-pack/Characters/basic-character-actions.png");
+    textures[TEXTURE_SPRITE_ACTION] = LoadTextureFromImage(image);
+    UnloadImage(image); 
+    
     worldHitbox = CreateHitboxRec(20);
 
     for (int i=0; i < WORLD_WIDTH; i++)
@@ -106,7 +110,15 @@ void GameStartup()
                                                                                     (Rectangle){10*TILE_WIDTH, 10*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT}},
                                                                     2);
 
+    player.animations[ANIMATION_DIG_FRONT] = CreateSpriteAnimation( 3,
+                                                                    true,
+                                                                    (Rectangle[]){  (Rectangle){4*TILE_WIDTH, 0*TILE_HEIGHT,TILE_WIDTH,TILE_HEIGHT*3},
+                                                                                    (Rectangle){1*TILE_WIDTH, 0*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT*3}},
+                                                                    2);
+                                                                    
     player.animations[ANIMATION_IDLE_DOWN].isPlaying = true;
+
+    
 
     camera.target = (Vector2) {player.base.x,player.base.y};
     camera.offset = (Vector2) { (float) screenWidth / 2, (float) screenHeight /2};

@@ -10,6 +10,7 @@
 #include "gameRender.h"
 #include "gameShutdown.h"
 #include "hitbox.h"
+#include "timer.h"
 
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
@@ -24,6 +25,7 @@ typedef enum
 
     // SPRITE
     TEXTURE_SPRITE_BASIC,
+    TEXTURE_SPRITE_ACTION,
 
     //OBJECTS
     MAX_TEXTURES
@@ -68,6 +70,8 @@ typedef enum
     ANIMATION_WALK_DOWN,
     ANIMATION_WALK_LEFT,
     ANIMATION_WALK_RIGHT,
+    ANIMATION_DIG_FRONT,
+    ANIMATION_DIG_BACK,
     ANIMATION_MAX,
 } AnimationType;
 
@@ -79,6 +83,7 @@ typedef struct
     Rectangle hitbox;
 } sSprite;
 
+extern sTimer animationTimer;
 extern Texture2D textures[MAX_TEXTURES];
 extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 extern sHitbox worldHitbox;

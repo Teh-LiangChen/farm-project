@@ -1,5 +1,6 @@
 #include "global.h"
 
+sTimer animationTimer;
 Texture2D textures[MAX_TEXTURES];
 sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 sHitbox worldHitbox;

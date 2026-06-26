@@ -42,6 +42,13 @@ void GameUpdate()
 
         y += moveDistance;
     }
+    else if (IsKeyPressed(KEY_SPACE))
+    {
+        hasKeyBeenPressed = true;
+        moving = false;
+        player.currentAnimation = ANIMATION_DIG_FRONT;
+        StartTimer(&animationTimer, 1);
+    }
     
     if (!moving)
     {
@@ -49,6 +56,11 @@ void GameUpdate()
         else if (player.currentAnimation == ANIMATION_WALK_RIGHT) player.currentAnimation = ANIMATION_IDLE_RIGHT;
         else if (player.currentAnimation == ANIMATION_WALK_UP) player.currentAnimation = ANIMATION_IDLE_UP;
         else if (player.currentAnimation == ANIMATION_WALK_DOWN) player.currentAnimation = ANIMATION_IDLE_DOWN;
+    }
+
+    if(player.currentAnimation == ANIMATION_DIG_FRONT && TimerDone(animationTimer))
+    {
+        player.currentAnimation = ANIMATION_IDLE_DOWN;
     }
 
     player.hitbox.x = x+4;
