@@ -48,6 +48,13 @@ void GameUpdate()
         moving = false;
         player.currentAnimation = ANIMATION_DIG_FRONT;
         StartTimer(&animationTimer, 1);
+
+        float targetX = player.actionbox.x + TILE_WIDTH/4;
+        float targetY = player.actionbox.y + TILE_HEIGHT/4;
+
+        int targetTileX = (int) targetX / TILE_WIDTH;
+        int targetTileY = (int) targetY / TILE_HEIGHT;
+        world[targetTileX][targetTileY].type = DIRT_FARM;
     }
     
     if (!moving)
@@ -81,6 +88,8 @@ void GameUpdate()
     {
         player.base.x = x;
         player.base.y = y;
+        player.actionbox.x = x+4;
+        player.actionbox.y = y+16;
     }
 
     camera.target = (Vector2) {player.base.x, player.base.y};

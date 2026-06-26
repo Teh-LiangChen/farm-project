@@ -19,6 +19,10 @@ void GameStartup()
     image = LoadImage("assets/sprout-lands-sprites-basic-pack/Characters/basic-character-actions.png");
     textures[TEXTURE_SPRITE_ACTION] = LoadTextureFromImage(image);
     UnloadImage(image); 
+
+    image = LoadImage("assets/sprout-lands-sprites-basic-pack/Tilesets/Tilled_Dirt.png");
+    textures[TEXTURE_TILESET_DIRT] = LoadTextureFromImage(image);
+    UnloadImage(image);
     
     worldHitbox = CreateHitboxRec(20);
 
@@ -32,7 +36,7 @@ void GameStartup()
             {
                 .x = i,
                 .y = j,
-                .type = GetRandomValue(GRASS_PLAIN, GRASS_MAX),
+                .type = GetRandomValue(GRASS_PLAIN, GRASS_PLAIN2),
                 .isSolid = worldEdge,
             };
 
@@ -60,6 +64,7 @@ void GameStartup()
                  .y = 3 * TILE_HEIGHT},
         .currentAnimation = ANIMATION_IDLE_DOWN,
         .hitbox = (Rectangle){3 * TILE_WIDTH+4, 3 * TILE_HEIGHT, TILE_WIDTH/2, TILE_HEIGHT},
+        .actionbox = (Rectangle){3*TILE_WIDTH+4, 4 * TILE_HEIGHT, TILE_WIDTH/2, TILE_HEIGHT/2},
     };
 
     player.animations[ANIMATION_IDLE_DOWN] = CreateSpriteAnimation( 4, 

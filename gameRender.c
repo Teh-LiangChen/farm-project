@@ -7,8 +7,6 @@ void GameRender()
     BeginMode2D(camera);
 
     sTile tile;
-    int texture_index_x = 0;
-    int texture_index_y = 0;
 
     // render world
     for (int i=0; i < WORLD_WIDTH; i++)
@@ -21,57 +19,24 @@ void GameRender()
             //border tile
             if (i == 0 || i == WORLD_WIDTH - 1 || j == 0 || j == WORLD_HEIGHT - 1)
             {
-                texture_index_x = 1;
-                texture_index_y = 1;
+                int texture_index_x = 1;
+                int texture_index_y = 1;
 
                 if (i == 0) texture_index_x = 0;
                 if (i == WORLD_WIDTH - 1) texture_index_x = 2;
 
                 if (j == 0) texture_index_y = 0;
                 if (j == WORLD_HEIGHT - 1) texture_index_y = 2;
+
+                DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
             }
             //center tile with random grass tile
             else
             {
-                switch (tile.type)
-                {
-                    case GRASS_LONG:
-                        texture_index_x = 0;
-                        texture_index_y = 5;
-                        break;
-                    case GRASS_LONG_WHTIE:
-                        texture_index_x = 0;
-                        texture_index_y = 6;
-                        break;
-                    //MAX also plain grass so that more plan grass
-                    case GRASS_MAX:
-                        texture_index_x = 1;
-                        texture_index_y = 1;
-                        break;
-                    case GRASS_PLAIN:
-                        texture_index_x = 1;
-                        texture_index_y = 1;
-                        break;
-                    case GRASS_SHORT_1:
-                        texture_index_x = 1;
-                        texture_index_y = 5;
-                        break;
-                    case GRASS_SHORT_1_WHITE:
-                        texture_index_x = 1;
-                        texture_index_y = 6;
-                        break;
-                    case GRASS_SHORT_2:
-                        texture_index_x = 2;
-                        texture_index_y = 5;
-                        break;
-                    case GRASS_SHORT_2_WHITE:
-                        texture_index_x = 2;
-                        texture_index_y = 6;
-                        break;
-                } 
+                sTileset tileTexture = TILESET_TABLE[tile.type];
+                DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, tileTexture.x, tileTexture.y, textures[tileTexture.source]);
             }
-
-            DrawTile (tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y, textures[TEXTURE_TILESET_GRASS]);
+            
         }
     }
 
@@ -115,6 +80,9 @@ void GameRender()
                         TILE_HEIGHT*3};
     
     Vector2 origin = {0,0};
+
+    // visualise actionbox
+    DrawRectangleRec(player.actionbox, Fade(GRAY, 0.5f));
     
     sAnimation* currentAnimation = &player.animations[player.currentAnimation];
 

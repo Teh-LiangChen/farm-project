@@ -22,6 +22,7 @@ typedef enum
     // MAP AND TERRAIN
     TEXTURE_TILESET_GRASS = 0,
     TEXTURE_TILESET_HILL,
+    TEXTURE_TILESET_DIRT,
 
     // SPRITE
     TEXTURE_SPRITE_BASIC,
@@ -43,8 +44,16 @@ typedef enum
     GRASS_SHORT_2,
     GRASS_SHORT_1_WHITE,
     GRASS_SHORT_2_WHITE,
-    GRASS_MAX,
-}grass_tile_type;
+    GRASS_PLAIN2,
+    DIRT_FARM,
+}tile_type;
+
+typedef struct
+{
+    int x;
+    int y;
+    int source;
+}sTileset;
 
 typedef struct
 {
@@ -81,6 +90,7 @@ typedef struct
     sAnimation animations[ANIMATION_MAX];
     AnimationType currentAnimation;
     Rectangle hitbox;
+    Rectangle actionbox;
 } sSprite;
 
 extern sTimer animationTimer;
@@ -89,5 +99,6 @@ extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 extern sHitbox worldHitbox;
 extern Camera2D camera;
 extern sSprite player;
+extern const sTileset TILESET_TABLE[];
 
 #endif
