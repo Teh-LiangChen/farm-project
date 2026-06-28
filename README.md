@@ -5,9 +5,11 @@ what have been done so far
 - a character
 - chracter moving animation
 - boundary and collision
+- interaction system
+- crop growing system
 
 doing
-- inetraction system
+- inventory system and harvest
 
 what to do
-- crop growing system
+- save system

@@ -56,6 +56,29 @@ void GameUpdate()
         int targetTileY = (int) targetY / TILE_HEIGHT;
         world[targetTileX][targetTileY].type = DIRT_FARM;
     }
+    else if (IsKeyPressed(KEY_P))
+    {
+        hasKeyBeenPressed = true;
+        moving = false;
+        player.currentAnimation = ANIMATION_DIG_FRONT;
+        StartTimer(&animationTimer, 1);
+
+        float targetX = player.actionbox.x + TILE_WIDTH/4;
+        float targetY = player.actionbox.y + TILE_HEIGHT/4;
+
+        int targetTileX = (int) targetX / TILE_WIDTH;
+        int targetTileY = (int) targetY / TILE_HEIGHT;
+
+        //TO-DO should base on inventory to see wht crop to plant
+        int cropType = CROP_PADDY;
+
+        if (world[targetTileX][targetTileY].type == DIRT_FARM && !world[targetTileX][targetTileY].isPlanted)
+        {
+            sCrop crop = CreateCrop(targetTileX, targetTileY, cropType, 15);
+            AddCrop(crop, &cropList);
+            world[targetTileX][targetTileY].isPlanted = true;
+        }
+    }
     
     if (!moving)
     {
@@ -90,6 +113,17 @@ void GameUpdate()
         player.base.y = y;
         player.actionbox.x = x+4;
         player.actionbox.y = y+16;
+    }
+
+    //check crop stage
+    for (int i = 0; i < cropList.counter; i++)
+    {
+        float timeGrowth = GetElapsed(cropList.array[i].timer) / cropList.array[i].duration;
+
+        if(timeGrowth < 0.25) cropList.array[i].stage = CROP_STAGE_GERMINATE;
+        else if(timeGrowth < 0.5) cropList.array[i].stage = CROP_STAGE_GROWTH;
+        else if (timeGrowth < 0.75) cropList.array[i].stage = CROP_STAGE_FRUITING;
+        else cropList.array[i].stage = CROP_STAGE_HARVEST;
     }
 
     camera.target = (Vector2) {player.base.x, player.base.y};

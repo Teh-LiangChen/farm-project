@@ -23,8 +23,13 @@ void GameStartup()
     image = LoadImage("assets/sprout-lands-sprites-basic-pack/Tilesets/Tilled_Dirt.png");
     textures[TEXTURE_TILESET_DIRT] = LoadTextureFromImage(image);
     UnloadImage(image);
+
+    image = LoadImage("assets/sprout-lands-sprites-basic-pack/Objects/Basic_Plants.png");
+    textures[TEXTURE_OBJECT_CROP] = LoadTextureFromImage(image);
+    UnloadImage(image);
     
     worldHitbox = CreateHitboxRec(20);
+    cropList = CreateCropList(5);
 
     for (int i=0; i < WORLD_WIDTH; i++)
     {

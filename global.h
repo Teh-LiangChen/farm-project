@@ -29,6 +29,7 @@ typedef enum
     TEXTURE_SPRITE_ACTION,
 
     //OBJECTS
+    TEXTURE_OBJECT_CROP,
     MAX_TEXTURES
 } texture_asset;
 
@@ -61,6 +62,7 @@ typedef struct
     int y;
     int type;
     bool isSolid;
+    bool isPlanted;
 } sTile;
 
 typedef struct
@@ -93,6 +95,8 @@ typedef struct
     Rectangle actionbox;
 } sSprite;
 
+#include "crop.h"
+
 extern sTimer animationTimer;
 extern Texture2D textures[MAX_TEXTURES];
 extern sTile world[WORLD_WIDTH][WORLD_HEIGHT];
@@ -100,5 +104,6 @@ extern sHitbox worldHitbox;
 extern Camera2D camera;
 extern sSprite player;
 extern const sTileset TILESET_TABLE[];
+extern sCropList cropList;
 
 #endif

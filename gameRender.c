@@ -53,6 +53,45 @@ void GameRender()
         }
     }
     
+    //render crop
+    for (int i = 0; i < cropList.counter; i++)
+    {
+        sCrop crop = cropList.array[i];
+        int texture_index_x;
+        int texture_index_y;
+
+        switch (crop.type)
+        {
+            case CROP_PADDY:
+                texture_index_y = 0;
+                break;
+            case CROP_TOMATO:
+                texture_index_y = 1;
+                break;
+        }
+
+        switch (crop.stage)
+        {
+            case CROP_STAGE_GERMINATE:
+                texture_index_x = 1;
+                break;
+            case CROP_STAGE_GROWTH:
+                texture_index_x = 2;
+                break;
+            case CROP_STAGE_FRUITING:
+                texture_index_x = 3;
+                break;
+            case CROP_STAGE_HARVEST:
+                texture_index_x = 4;
+                break;
+        }
+
+        DrawTile(   cropList.array[i].base.x * TILE_WIDTH,
+                    cropList.array[i].base.y * TILE_HEIGHT,
+                    texture_index_x, 
+                    texture_index_y, 
+                    textures[TEXTURE_OBJECT_CROP]);
+    }
 
     // render hill hit box
     // DrawRectangle ( world[5][5].x * TILE_WIDTH, 

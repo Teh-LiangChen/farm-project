@@ -6,6 +6,7 @@ sTile world[WORLD_WIDTH][WORLD_HEIGHT];
 sHitbox worldHitbox;
 Camera2D camera = {0};
 sSprite player;
+sCropList cropList;
 const sTileset TILESET_TABLE[] = 
 {
     [GRASS_PLAIN]          = { 1, 1, TEXTURE_TILESET_GRASS },
