@@ -46,39 +46,66 @@ void GameUpdate()
     {
         hasKeyBeenPressed = true;
         moving = false;
-        player.currentAnimation = ANIMATION_DIG_FRONT;
-        StartTimer(&animationTimer, 1);
+        if(inventoryList[currentSelectedSlot].item != NULL)
+        {
+            if(inventoryList[currentSelectedSlot].item->name == ITEM_CANGKUL)
+            {
+                player.currentAnimation = ANIMATION_DIG_FRONT;
+                StartTimer(&animationTimer, 1);
 
-        float targetX = player.actionbox.x + TILE_WIDTH/4;
-        float targetY = player.actionbox.y + TILE_HEIGHT/4;
+                float targetX = player.actionbox.x + TILE_WIDTH/4;
+                float targetY = player.actionbox.y + TILE_HEIGHT/4;
 
-        int targetTileX = (int) targetX / TILE_WIDTH;
-        int targetTileY = (int) targetY / TILE_HEIGHT;
-        world[targetTileX][targetTileY].type = DIRT_FARM;
+                int targetTileX = (int) targetX / TILE_WIDTH;
+                int targetTileY = (int) targetY / TILE_HEIGHT;
+                world[targetTileX][targetTileY].type = DIRT_FARM;
+            }
+        } 
     }
     else if (IsKeyPressed(KEY_P))
     {
         hasKeyBeenPressed = true;
         moving = false;
-        player.currentAnimation = ANIMATION_DIG_FRONT;
-        StartTimer(&animationTimer, 1);
 
-        float targetX = player.actionbox.x + TILE_WIDTH/4;
-        float targetY = player.actionbox.y + TILE_HEIGHT/4;
-
-        int targetTileX = (int) targetX / TILE_WIDTH;
-        int targetTileY = (int) targetY / TILE_HEIGHT;
-
-        //TO-DO should base on inventory to see wht crop to plant
-        int cropType = CROP_PADDY;
-
-        if (world[targetTileX][targetTileY].type == DIRT_FARM && !world[targetTileX][targetTileY].isPlanted)
+        //TO-DO if the plant scale up, should be need a plant list to interate instead
+        if(inventoryList[currentSelectedSlot].item != NULL)
         {
-            sCrop crop = CreateCrop(targetTileX, targetTileY, cropType, 15);
-            AddCrop(crop, &cropList);
-            world[targetTileX][targetTileY].isPlanted = true;
+            if(inventoryList[currentSelectedSlot].item->name == ITEM_PADDY_SEED || inventoryList[currentSelectedSlot].item->name == ITEM_TOMATO_SEED)
+            {
+                player.currentAnimation = ANIMATION_DIG_FRONT;
+                StartTimer(&animationTimer, 1);
+
+                float targetX = player.actionbox.x + TILE_WIDTH/4;
+                float targetY = player.actionbox.y + TILE_HEIGHT/4;
+
+                int targetTileX = (int) targetX / TILE_WIDTH;
+                int targetTileY = (int) targetY / TILE_HEIGHT;
+
+                //TO-DO if the plant scale up, should map the item name to the cropType
+                int cropType;
+                if(inventoryList[currentSelectedSlot].item->name == ITEM_PADDY_SEED) cropType = CROP_PADDY;
+                if(inventoryList[currentSelectedSlot].item->name == ITEM_TOMATO_SEED) cropType = CROP_TOMATO;
+
+                if (world[targetTileX][targetTileY].type == DIRT_FARM && !world[targetTileX][targetTileY].isPlanted)
+                {
+                    sCrop crop = CreateCrop(targetTileX, targetTileY, cropType, 15);
+                    AddCrop(crop, &cropList);
+                    world[targetTileX][targetTileY].isPlanted = true;
+                }
+            }
         }
     }
+    
+    if (IsKeyDown(KEY_ONE)) currentSelectedSlot = 0;
+    if (IsKeyDown(KEY_TWO)) currentSelectedSlot = 1;
+    if (IsKeyDown(KEY_THREE)) currentSelectedSlot = 2;
+    if (IsKeyDown(KEY_FOUR)) currentSelectedSlot = 3;
+    if (IsKeyDown(KEY_FIVE)) currentSelectedSlot = 4;
+    if (IsKeyDown(KEY_SIX)) currentSelectedSlot = 5;
+    if (IsKeyDown(KEY_SEVEN)) currentSelectedSlot = 6;
+    if (IsKeyDown(KEY_EIGHT)) currentSelectedSlot = 7;
+    if (IsKeyDown(KEY_NINE)) currentSelectedSlot = 8;
+    if (IsKeyDown(KEY_ZERO)) currentSelectedSlot = 9;
     
     if (!moving)
     {

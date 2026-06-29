@@ -27,10 +27,15 @@ void GameStartup()
     image = LoadImage("assets/sprout-lands-sprites-basic-pack/Objects/Basic_Plants.png");
     textures[TEXTURE_OBJECT_CROP] = LoadTextureFromImage(image);
     UnloadImage(image);
+
+    image = LoadImage("assets/sprout-lands-sprites-basic-pack/Objects/Basic_tools_and_meterials.png");
+    textures[TEXTURE_OBJECT_TOOL] = LoadTextureFromImage(image);
+    UnloadImage(image);
     
     worldHitbox = CreateHitboxRec(20);
     cropList = CreateCropList(5);
 
+    // initialise world tile
     for (int i=0; i < WORLD_WIDTH; i++)
     {
         for (int j=0; j< WORLD_HEIGHT; j++)
@@ -52,7 +57,8 @@ void GameStartup()
         }
     }
 
-    // // TO-DO make into function if keep use
+    //initialise hill tile
+    // TO-DO make into function if keep use
     for (int i = 5; i < 8; i++)
     {
         for (int j = 5; j < 8; j++)
@@ -61,6 +67,11 @@ void GameStartup()
             AddHitboxRec(&worldHitbox, (Rectangle){world[i][j].x * TILE_WIDTH, world[i][j].y * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT});
         }
     }
+
+    InitialiseItem();
+    inventoryList[0] = (sInventory){ &ITEM_LIST[ITEM_CANGKUL],     1};
+    inventoryList[1] = (sInventory){ &ITEM_LIST[ITEM_PADDY_SEED],  5}; 
+    inventoryList[2] = (sInventory){ &ITEM_LIST[ITEM_TOMATO_SEED], 2};
 
     //starting position of player
     player = (sSprite)

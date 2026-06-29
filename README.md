@@ -7,9 +7,11 @@ what have been done so far
 - boundary and collision
 - interaction system
 - crop growing system
+- inventory system
 
 doing
-- inventory system and harvest
+- harvest
 
 what to do
+- autotiling
 - save system

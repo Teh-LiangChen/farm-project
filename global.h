@@ -11,6 +11,7 @@
 #include "gameShutdown.h"
 #include "hitbox.h"
 #include "timer.h"
+#include "inventory.h"
 
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
@@ -30,6 +31,7 @@ typedef enum
 
     //OBJECTS
     TEXTURE_OBJECT_CROP,
+    TEXTURE_OBJECT_TOOL,
     MAX_TEXTURES
 } texture_asset;
 

@@ -140,6 +140,41 @@ void GameRender()
     DrawRectangle(5, 5, 500, 50, Fade(GRAY, 0.5f));
     DrawText(TextFormat("Coor: (%2.2f, %2.2f)", camera.target.x, camera.target.y), 10, 10, 20, BLACK);
     DrawText(TextFormat("Tile: (%d, %d)", player.base.x / TILE_WIDTH, player.base.y /TILE_HEIGHT), 10, 35, 20, BLACK);
+
+    //render inventory box
+    Rectangle inventoryBox = (Rectangle) {156, 521, 515, 56};
+    DrawRectangleRec(inventoryBox, Fade(LIGHTGRAY, 0.5f));
+    DrawRectangleLinesEx(inventoryBox, 3.0f, Fade(DARKBROWN, 0.7f));
+      
+
+    //render item box
+    for (int i = 0; i < 10; i++)
+    {
+        sInventory inventory = inventoryList[i];
+        Rectangle itemBox = (Rectangle){160 + i * (48+3), 525, 48, 48};
+
+        if(i == currentSelectedSlot)
+        {
+            DrawRectangleRec(itemBox, Fade(WHITE, 0.65f));
+        }
+        
+        if(inventory.item != NULL)
+        {            
+            Rectangle source = {(float) inventory.item->texture_index_x * TILE_WIDTH, 
+                                (float) inventory.item->texture_index_y * TILE_HEIGHT, 
+                                (float)TILE_WIDTH, 
+                                (float)TILE_HEIGHT};
+            
+            DrawTexturePro (textures[inventory.item->texture_asset], 
+                            source, 
+                            itemBox, 
+                            (Vector2){0,0}, 
+                            0.0f, 
+                            WHITE);
+        }
+        
+        DrawRectangleLinesEx(itemBox, 3.0f, Fade(BROWN, 0.7f));
+    }
 }
 
 void DrawTile (int pos_x, int pos_y, int texture_index_x, int texture_index_y, Texture2D texture)

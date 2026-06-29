@@ -32,7 +32,7 @@ int main()
         GameUpdate();
 
         BeginDrawing();
-        ClearBackground(GRAY);
+        ClearBackground(WHITE);
 
         GameRender();
 
